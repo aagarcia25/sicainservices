@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\EscanerController;
+use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,5 +22,9 @@ Route::group([
 ], function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('Escaner', [EscanerController::class, 'Escaner']);
+    Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);
+    Route::post('Bitacorafull', [BitacoraController::class, 'Bitacorafull']);
+    Route::post('incidencia', [IncidenciaController::class, 'incidencia']);
+    Route::post('incidenciaList', [IncidenciaController::class, 'incidenciaList']);
 
 });

@@ -30,10 +30,7 @@ class Bitacora extends Model
     public $timestamps = false;
 
     public $casts = [
-        'IdEmpleado' => 'uuid',
         'Fecha' => 'datetime',
-        'HoraEntrada' => 'datetime',
-        'HoraSalida' => 'datetime',
     ];
 
     public $fillable = [
