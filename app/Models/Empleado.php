@@ -25,7 +25,7 @@ class Empleado extends Model
     public $table = 'Empleados';
     public $incrementing = false;
     public $timestamps = false;
-    public $primaryKey = 'id';
+    public $primaryKey = 'Id';
 
     protected $_casts = [
         'NumeroEmpleado' => 'int',
@@ -38,4 +38,9 @@ class Empleado extends Model
         'ApellidoM',
         'RazonSocial',
     ];
+
+    public function bitacoras()
+    {
+        return $this->hasMany(Bitacora::class, 'IdEmpleado');
+    }
 }

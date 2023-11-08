@@ -78,4 +78,62 @@ class IncidenciaController extends Controller
 
     }
 
+    public function totalincidencias(Request $request)
+    {
+
+        $NUMCODE = 0;
+        $STRMESSAGE = 'Exito';
+        $response = "";
+        $SUCCESS = true;
+
+        try {
+
+            $response = DB::select('
+            SELECT COUNT(1) total FROM SICAIN.Incidencias
+            ');
+
+        } catch (\Exception $e) {
+            $NUMCODE = 1;
+            $STRMESSAGE = $e->getMessage();
+            $SUCCESS = false;
+        }
+        return response()->json(
+            [
+                'NUMCODE' => $NUMCODE,
+                'STRMESSAGE' => $STRMESSAGE,
+                'RESPONSE' => $response,
+                'SUCCESS' => $SUCCESS,
+            ]);
+
+    }
+
+    public function Incidenciasporfecha(Request $request)
+    {
+
+        $NUMCODE = 0;
+        $STRMESSAGE = 'Exito';
+        $response = "";
+        $SUCCESS = true;
+
+        try {
+
+            $response = DB::select('
+           SELECT COUNT(1) total,FechaCreacion FROM SICAIN.Incidencias group BY FechaCreacion
+            ');
+
+        } catch (\Exception $e) {
+            $NUMCODE = 1;
+            $STRMESSAGE = $e->getMessage();
+            $SUCCESS = false;
+        }
+        return response()->json(
+            [
+                'NUMCODE' => $NUMCODE,
+                'STRMESSAGE' => $STRMESSAGE,
+                'RESPONSE' => $response,
+                'SUCCESS' => $SUCCESS,
+            ]);
+
+    }
+
 }

@@ -38,6 +38,7 @@ class Bitacora extends Model
         'Fecha',
         'HoraEntrada',
         'HoraSalida',
+        'Completado',
     ];
 
     public function empleado()

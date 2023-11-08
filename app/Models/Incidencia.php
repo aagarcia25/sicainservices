@@ -31,7 +31,7 @@ class Incidencia extends Model
         'Foto',
         'Observaciones',
         'IdEmpleado',
-        'FechaCreación',
+        'FechaCreacion',
         'CreadoPor',
     ];
 

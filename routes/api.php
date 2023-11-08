@@ -24,7 +24,11 @@ Route::group([
     Route::post('Escaner', [EscanerController::class, 'Escaner']);
     Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);
     Route::post('Bitacorafull', [BitacoraController::class, 'Bitacorafull']);
+    Route::post('Registra', [BitacoraController::class, 'Registra']);
+    Route::post('BitacoraSingle', [BitacoraController::class, 'BitacoraSingle']);
     Route::post('incidencia', [IncidenciaController::class, 'incidencia']);
     Route::post('incidenciaList', [IncidenciaController::class, 'incidenciaList']);
+    Route::post('totalincidencias', [IncidenciaController::class, 'totalincidencias']);
+    Route::post('Incidenciasporfecha', [IncidenciaController::class, 'Incidenciasporfecha']);
 
 });
