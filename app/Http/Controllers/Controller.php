@@ -10,7 +10,8 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, ValidatesRequests;
-    use LoggableTrait, DecryptDataTrait;
-
+    use AuthorizesRequests;
+    use ValidatesRequests;
+    use LoggableTrait;
+    use DecryptDataTrait;
 }
