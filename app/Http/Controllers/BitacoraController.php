@@ -41,17 +41,20 @@ class BitacoraController extends Controller
             }
 
         } catch (\Exception $e) {
+            $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
+
             $NUMCODE = 1;
             $STRMESSAGE = $e->getMessage();
             $SUCCESS = false;
         }
         return response()->json(
-            [
-                'NUMCODE' => $NUMCODE,
-                'STRMESSAGE' => $STRMESSAGE,
-                'RESPONSE' => $response,
-                'SUCCESS' => $SUCCESS,
-            ]);
+            $this->encryptData(json_encode(
+                [
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ])));
 
     }
 
@@ -79,17 +82,20 @@ class BitacoraController extends Controller
             ', [$request->idEmpleado]);
 
         } catch (\Exception $e) {
+            $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
+
             $NUMCODE = 1;
             $STRMESSAGE = $e->getMessage();
             $SUCCESS = false;
         }
         return response()->json(
-            [
-                'NUMCODE' => $NUMCODE,
-                'STRMESSAGE' => $STRMESSAGE,
-                'RESPONSE' => $response,
-                'SUCCESS' => $SUCCESS,
-            ]);
+            $this->encryptData(json_encode(
+                [
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ])));
 
     }
 
@@ -129,17 +135,20 @@ class BitacoraController extends Controller
 ');
 
         } catch (\Exception $e) {
+            $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
+
             $NUMCODE = 1;
             $STRMESSAGE = $e->getMessage();
             $SUCCESS = false;
         }
         return response()->json(
-            [
-                'NUMCODE' => $NUMCODE,
-                'STRMESSAGE' => $STRMESSAGE,
-                'RESPONSE' => $response,
-                'SUCCESS' => $SUCCESS,
-            ]);
+            $this->encryptData(json_encode(
+                [
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ])));
 
     }
 
@@ -157,17 +166,20 @@ class BitacoraController extends Controller
                 ->get();
 
         } catch (\Exception $e) {
+            $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
+
             $NUMCODE = 1;
             $STRMESSAGE = $e->getMessage();
             $SUCCESS = false;
         }
         return response()->json(
-            [
-                'NUMCODE' => $NUMCODE,
-                'STRMESSAGE' => $STRMESSAGE,
-                'RESPONSE' => $response,
-                'SUCCESS' => $SUCCESS,
-            ]);
+            $this->encryptData(json_encode(
+                [
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ])));
 
     }
 }

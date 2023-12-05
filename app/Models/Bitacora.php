@@ -10,39 +10,35 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Bitacora
+ * Class Bitacora.
  *
- * @property uuid $Id
- * @property uuid $IdEmpleado
- * @property Carbon $Fecha
- * @property Carbon $HoraEntrada
- * @property Carbon $HoraSalida
- *
- * @property Empleado $empleado
- *
- * @package App\Models
+ * @property string      $Id
+ * @property string      $IdEmpleado
+ * @property Carbon      $Fecha
+ * @property string|null $HoraEntrada
+ * @property string|null $HoraSalida
+ * @property Carbon|null $FechaCreacion
+ * @property int         $Completado
  */
 class Bitacora extends Model
 {
-    public $table = 'Bitacora';
-    public $primaryKey = 'Id';
+    protected $table = 'Bitacora';
+    protected $primaryKey = 'Id';
     public $incrementing = false;
     public $timestamps = false;
 
-    public $casts = [
+    protected $casts = [
         'Fecha' => 'datetime',
+        'FechaCreacion' => 'datetime',
+        'Completado' => 'int',
     ];
 
-    public $fillable = [
+    protected $fillable = [
         'IdEmpleado',
         'Fecha',
         'HoraEntrada',
         'HoraSalida',
+        'FechaCreacion',
         'Completado',
     ];
-
-    public function empleado()
-    {
-        return $this->belongsTo(Empleado::class, 'IdEmpleado');
-    }
 }

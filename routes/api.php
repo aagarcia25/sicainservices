@@ -4,6 +4,9 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\EscanerController;
 use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UsuariosController;
+use App\Http\Controllers\UtilityController;
+use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,17 +21,30 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group([
-    'prefix' => 'SICAIN',
+ 'prefix' => 'SICAIN',
+  'middleware' => [ThrottleRequests::class . ':10,1'], // 2 intentos en 1 minuto
+
 ], function () {
-    Route::post('login', [LoginController::class, 'login']);
-    Route::post('Escaner', [EscanerController::class, 'Escaner']);
-    Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);
-    Route::post('Bitacorafull', [BitacoraController::class, 'Bitacorafull']);
-    Route::post('Registra', [BitacoraController::class, 'Registra']);
-    Route::post('BitacoraSingle', [BitacoraController::class, 'BitacoraSingle']);
-    Route::post('incidencia', [IncidenciaController::class, 'incidencia']);
-    Route::post('incidenciaList', [IncidenciaController::class, 'incidenciaList']);
-    Route::post('totalincidencias', [IncidenciaController::class, 'totalincidencias']);
-    Route::post('Incidenciasporfecha', [IncidenciaController::class, 'Incidenciasporfecha']);
+ Route::post('login', [LoginController::class, 'login']);
+
+});
+
+Route::group([
+ 'prefix' => 'SICAIN',
+ 'middleware' => [ThrottleRequests::class . ':100,5'], // 2 intentos en 1 minuto
+
+], function () {
+ Route::post('logout', [LoginController::class, 'logout']);
+ Route::post('Escaner', [EscanerController::class, 'Escaner']);
+ Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);
+ Route::post('Bitacorafull', [BitacoraController::class, 'Bitacorafull']);
+ Route::post('Registra', [BitacoraController::class, 'Registra']);
+ Route::post('BitacoraSingle', [BitacoraController::class, 'BitacoraSingle']);
+ Route::post('incidencia', [IncidenciaController::class, 'incidencia']);
+ Route::post('incidenciaList', [IncidenciaController::class, 'incidenciaList']);
+ Route::post('totalincidencias', [IncidenciaController::class, 'totalincidencias']);
+ Route::post('Incidenciasporfecha', [IncidenciaController::class, 'Incidenciasporfecha']);
+ Route::post('usuarios', [UsuariosController::class, 'usuarios']);
+ Route::post('selectores', [UtilityController::class, 'selectores']);
 
 });

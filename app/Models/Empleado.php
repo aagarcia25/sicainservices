@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Empleado
- *
- * @property uuid $Id
+ * 
+ * @property string $Id
  * @property int $NumeroEmpleado
  * @property string $Nombre
  * @property string $ApellidoP
@@ -22,25 +22,20 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Empleado extends Model
 {
-    public $table = 'Empleados';
-    public $incrementing = false;
-    public $timestamps = false;
-    public $primaryKey = 'Id';
+	protected $table = 'Empleados';
+	protected $primaryKey = 'Id';
+	public $incrementing = false;
+	public $timestamps = false;
 
-    protected $_casts = [
-        'NumeroEmpleado' => 'int',
-    ];
+	protected $casts = [
+		'NumeroEmpleado' => 'int'
+	];
 
-    protected $_fillable = [
-        'NumeroEmpleado',
-        'Nombre',
-        'ApellidoP',
-        'ApellidoM',
-        'RazonSocial',
-    ];
-
-    public function bitacoras()
-    {
-        return $this->hasMany(Bitacora::class, 'IdEmpleado');
-    }
+	protected $fillable = [
+		'NumeroEmpleado',
+		'Nombre',
+		'ApellidoP',
+		'ApellidoM',
+		'RazonSocial'
+	];
 }
