@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group([
- 'prefix' => 'SICAIN',
+ 'prefix' => 'SICAIN_API_JGV',
 ], function () {
     Route::post('login', [LoginController::class, 'login']);
     Route::post('logout', [LoginController::class, 'logout']);
