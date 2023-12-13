@@ -6,7 +6,6 @@ use App\Http\Controllers\IncidenciaController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UsuariosController;
 use App\Http\Controllers\UtilityController;
-use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,12 +23,6 @@ Route::group([
  'prefix' => 'SICAIN',
 ], function () {
     Route::post('login', [LoginController::class, 'login']);
-});
-
-Route::group([
- 'prefix' => 'SICAIN',
- 'middleware' => [ThrottleRequests::class.':100,5'], // 2 intentos en 1 minuto
-], function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::post('ChangePassword', [LoginController::class, 'ChangePassword']);
     Route::post('Escaner', [EscanerController::class, 'Escaner']);
