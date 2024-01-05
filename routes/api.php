@@ -22,8 +22,9 @@ use Illuminate\Support\Facades\Route;
 Route::group([
  'prefix' => 'SICAIN_API_JGV',
 ], function () {
-    Route::post('login', [LoginController::class, 'login']);
+    Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,10');
     Route::post('logout', [LoginController::class, 'logout']);
+    Route::post('logoutuser', [LoginController::class, 'logoutuser']);
     Route::post('ChangePassword', [LoginController::class, 'ChangePassword']);
     Route::post('Escaner', [EscanerController::class, 'Escaner']);
     Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);

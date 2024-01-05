@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
-
+use Carbon\Carbon;
 class LoginController extends Controller
 {
     public function login(Request $request)
@@ -18,7 +19,7 @@ class LoginController extends Controller
         try {
             $data = $this->decryptData($request->b);
             $obj = json_decode($data);
-
+            $this->logInfo($obj->nombreUsuario, __METHOD__, __LINE__);
             $usuarios = Usuario::where('Usuario', $obj->nombreUsuario)->first();
 
             if ($usuarios && Hash::check($obj->Password, $usuarios->Password)) {
@@ -27,6 +28,17 @@ class LoginController extends Controller
                     $userWithoutPassword = new \stdClass();
                     $userWithoutPassword->Id = $usuarios->Id;
                     $userWithoutPassword->Usuario = $usuarios->Usuario;
+
+
+
+                    $differenceInDays = Carbon::now()->diffInDays($usuarios->updatePassword);
+                    if($differenceInDays <= 30){
+                        $userWithoutPassword->bp = true;
+                    }else{
+                        $userWithoutPassword->bp = false;
+                    }
+
+                   
 
                     // Acceder a los roles del usuario a través de la relación
                     $rolesDelUsuario = $usuarios->usuario_rols;
@@ -47,6 +59,7 @@ class LoginController extends Controller
                         $response->Roles = $rolesUsuario;
                     }
                 } else {
+                    $NUMCODE = 2525;
                     $response = false;
                     $STRMESSAGE = 'Usuario ya cuenta con una Sessión Activa';
                 }
@@ -126,6 +139,7 @@ class LoginController extends Controller
             $this->logInfo($usuarios, __METHOD__, __LINE__);
             if ($usuarios && Hash::check($res->p1, $usuarios->Password)) {
                 $usuarios->password = Hash::make($res->p2);
+                $usuarios->updatePassword = Carbon::now();
                 if ($usuarios->save()) {
                     $response = false;
                     $STRMESSAGE = 'Se actualizo la Contraseña';
@@ -153,4 +167,44 @@ class LoginController extends Controller
                  'SUCCESS' => $SUCCESS,
                 ])));
     }
+
+    public function logoutuser(Request $request)
+    {
+        $NUMCODE = 0;
+        $STRMESSAGE = 'Exito';
+        $response = '';
+        $SUCCESS = true;
+
+        $data = $this->decryptData($request->b);
+        $obj = json_decode($data);
+
+        try {
+            $id = $this->decryptData($obj->nombreUsuario);
+            $response = $id;
+            $usuarios = Usuario::where('Usuario', $id)->where('SessionActiva', 1)->first();
+            if ($usuarios) {
+                $usuarios->SessionActiva = 0;
+                $usuarios->save();
+                $response = true;
+            } else {
+                $response = false;
+                $STRMESSAGE = 'Usuario ya cuenta con una Sessión Activa';
+            }
+        } catch (\Exception $e) {
+            $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
+            $NUMCODE = 1;
+            $STRMESSAGE = $e->getMessage();
+            $SUCCESS = false;
+        }
+
+        return response()->json(
+            $this->encryptData(json_encode(
+                [
+                 'NUMCODE' => $NUMCODE,
+                 'STRMESSAGE' => $STRMESSAGE,
+                 'RESPONSE' => $response,
+                 'SUCCESS' => $SUCCESS,
+                ])));
+    }
+
 }
