@@ -67,7 +67,7 @@ class UsuariosController extends Controller
                 $obj->apellidomaterno = $res->apellidomaterno;
                 if ($obj->save()) {
                     // Crear un nuevo registro en la tabla usuariorols
-                    $usuariorol = new Usuariorol();
+                    $usuariorol = new UsuarioRol();
                     $usuariorol->Id = Str::uuid(); // Otra vez, utiliza Str::uuid() o la lógica que necesites
                     $usuariorol->IdUsuario = $id; // Asociar con el usuario recién creado
                     $usuariorol->IdRol = $res->rol;
