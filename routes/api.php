@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
  */
 
 Route::group([
- 'prefix' => 'SICAIN_API_JGV',
+    'prefix' => 'SICAIN_API_JGV',
+    'middleware' => ['api'],
 ], function () {
     Route::post('login', [LoginController::class, 'login'])->middleware('throttle:5,10');
     Route::post('logout', [LoginController::class, 'logout']);

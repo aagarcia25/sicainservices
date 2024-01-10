@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+
 class LoginController extends Controller
 {
     public function login(Request $request)
@@ -32,13 +33,13 @@ class LoginController extends Controller
 
 
                     $differenceInDays = Carbon::now()->diffInDays($usuarios->updatePassword);
-                    if($differenceInDays >= 30){
+                    if ($differenceInDays >= 30) {
                         $userWithoutPassword->bp = true;
-                    }else{
+                    } else {
                         $userWithoutPassword->bp = false;
                     }
 
-                   
+
 
                     // Acceder a los roles del usuario a través de la relación
                     $rolesDelUsuario = $usuarios->usuario_rols;
@@ -53,7 +54,9 @@ class LoginController extends Controller
                         $STRMESSAGE = 'Usuario no cuenta con un rol asignado';
                     } else {
                         $usuarios->SessionActiva = 1;
+                        $usuarios->IdSession = Str::uuid();
                         $usuarios->save();
+                        $userWithoutPassword->session = $usuarios->IdSession;
                         $response->login = true;
                         $response->User = $userWithoutPassword;
                         $response->Roles = $rolesUsuario;
@@ -77,11 +80,12 @@ class LoginController extends Controller
         return response()->json(
             $this->encryptData(json_encode(
                 [
-                 'NUMCODE' => $NUMCODE,
-                 'STRMESSAGE' => $STRMESSAGE,
-                 'RESPONSE' => $response,
-                 'SUCCESS' => $SUCCESS,
-                ]))
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ]
+            ))
         );
     }
 
@@ -117,11 +121,13 @@ class LoginController extends Controller
         return response()->json(
             $this->encryptData(json_encode(
                 [
-                 'NUMCODE' => $NUMCODE,
-                 'STRMESSAGE' => $STRMESSAGE,
-                 'RESPONSE' => $response,
-                 'SUCCESS' => $SUCCESS,
-                ])));
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ]
+            ))
+        );
     }
 
     public function ChangePassword(Request $request)
@@ -161,11 +167,13 @@ class LoginController extends Controller
         return response()->json(
             $this->encryptData(json_encode(
                 [
-                 'NUMCODE' => $NUMCODE,
-                 'STRMESSAGE' => $STRMESSAGE,
-                 'RESPONSE' => $response,
-                 'SUCCESS' => $SUCCESS,
-                ])));
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ]
+            ))
+        );
     }
 
     public function logoutuser(Request $request)
@@ -184,6 +192,7 @@ class LoginController extends Controller
             $usuarios = Usuario::where('Usuario', $id)->where('SessionActiva', 1)->first();
             if ($usuarios) {
                 $usuarios->SessionActiva = 0;
+                $usuarios->IdSession = null;
                 $usuarios->save();
                 $response = true;
             } else {
@@ -200,11 +209,12 @@ class LoginController extends Controller
         return response()->json(
             $this->encryptData(json_encode(
                 [
-                 'NUMCODE' => $NUMCODE,
-                 'STRMESSAGE' => $STRMESSAGE,
-                 'RESPONSE' => $response,
-                 'SUCCESS' => $SUCCESS,
-                ])));
+                    'NUMCODE' => $NUMCODE,
+                    'STRMESSAGE' => $STRMESSAGE,
+                    'RESPONSE' => $response,
+                    'SUCCESS' => $SUCCESS,
+                ]
+            ))
+        );
     }
-
 }
