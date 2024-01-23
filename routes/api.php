@@ -28,10 +28,6 @@ Route::group([
     Route::post('logoutuser', [LoginController::class, 'logoutuser']);
     Route::post('ChangePassword', [LoginController::class, 'ChangePassword']);
     Route::post('Escaner', [EscanerController::class, 'Escaner']);
-    Route::post('Bitacora', [BitacoraController::class, 'Bitacora']);
-    Route::post('Bitacorafull', [BitacoraController::class, 'Bitacorafull']);
-    Route::post('Registra', [BitacoraController::class, 'Registra']);
-    Route::post('BitacoraSingle', [BitacoraController::class, 'BitacoraSingle']);
     Route::post('incidencia', [IncidenciaController::class, 'incidencia']);
     Route::post('incidenciaList', [IncidenciaController::class, 'incidenciaList']);
     Route::post('totalincidencias', [IncidenciaController::class, 'totalincidencias']);

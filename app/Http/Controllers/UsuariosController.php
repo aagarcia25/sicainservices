@@ -21,37 +21,7 @@ class UsuariosController extends Controller
         try {
             $data = $this->decryptData($request->b);
             $res = json_decode($data);
-
             $type = $res->NUMOPERACION;
-
-            // Definir reglas de validación comunes para inserción y actualización
-            //    $reglasComunes = [
-            //     'Usuario' => 'required|string|max:50',
-            //     'password' => 'required|string|min:6|max:100',
-            //     'email' => 'required|email|max:50',
-            //     'nombre' => 'required|string|max:50',
-            //     'apellidopaterno' => 'required|string|max:50',
-            //     'apellidomaterno' => 'required|string|max:50',
-            //    ];
-
-            //    // Validaciones específicas para la inserción
-            //    $reglasInsercion = [
-            //     'Usuario' => 'unique:usuarios,Usuario',
-            //     'email' => 'unique:usuarios,email',
-            //    ];
-
-            //    $reglas = ($type == 1) ? array_merge($reglasComunes, $reglasInsercion) : $reglasComunes;
-
-            //    $validador = Validator::make($request->all(), $reglas);
-
-            //    if ($validador->fails()) {
-            //     return response()->json([
-            //      'NUMCODE' => 1,
-            //      'STRMESSAGE' => $validador->errors()->first(),
-            //      'SUCCESS' => false,
-            //     ]);
-            //    }
-
             if ($type == 1) {
                 // Inserción
                 $obj = new Usuario();
@@ -123,6 +93,8 @@ class UsuariosController extends Controller
                     'STRMESSAGE' => $STRMESSAGE,
                     'RESPONSE' => $response,
                     'SUCCESS' => $SUCCESS,
-                ])));
+                ]
+            ))
+        );
     }
 }

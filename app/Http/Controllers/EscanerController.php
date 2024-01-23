@@ -18,16 +18,16 @@ class EscanerController extends Controller
 
         try {
 
-            $empleado = Empleado::where('NumeroEmpleado', $request->NumEmpleado)->first();
+            $data = $this->decryptData($request->b);
+            $obj = json_decode($data);
+            $empleado = Empleado::where('NumeroEmpleado', $obj->NumEmpleado)->first();
 
             if ($empleado) {
                 $response = $empleado;
             } else {
                 $response = false;
                 $STRMESSAGE = "Empleado No Encontrado";
-
             }
-
         } catch (\Exception $e) {
             $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
 
@@ -42,7 +42,8 @@ class EscanerController extends Controller
                     'STRMESSAGE' => $STRMESSAGE,
                     'RESPONSE' => $response,
                     'SUCCESS' => $SUCCESS,
-                ])));
-
+                ]
+            ))
+        );
     }
 }
