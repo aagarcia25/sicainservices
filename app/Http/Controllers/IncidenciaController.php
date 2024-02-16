@@ -61,7 +61,28 @@ class IncidenciaController extends Controller
                 ];
 
                 $plantilla = $this->getplantilla('001', $parametros);
-                $this->sendMailNotificacion('adolfoangelgarcia66@gmail.com', $plantilla->Encabezado, $plantilla->body);
+
+                $correos = DB::select('SELECT Valor  FROM  SICAIN.ParametrosGenerales WHERE Clave="CORREO_01"');
+
+                if (!empty($correos)) {
+                    // Obtén el primer resultado de la consulta
+                    $primerResultado = $correos[0];
+                    // Obtén el valor del correo electrónico
+                    $correosSeparados = $primerResultado->Valor;
+                    // Divide los correos electrónicos por punto y coma
+                    $arrayCorreos = explode(
+                        ';',
+                        $correosSeparados
+                    );
+
+                    // Recorre el array de correos electrónicos e imprímelos
+                    foreach ($arrayCorreos as $correo) {
+                        $this->sendMailNotificacion($correo, $plantilla->Encabezado, $plantilla->body);
+                    }
+                } else {
+                    // Manejar el caso en que no haya resultados en la consulta
+                    echo "No se encontraron correos electrónicos.";
+                }
             }
         } catch (\Exception $e) {
             $this->logInfo($e->getMessage(), __METHOD__, __LINE__);
